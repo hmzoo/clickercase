@@ -1,27 +1,26 @@
 {
-  "name": "node-app",
-  "version": "1.0.0",
-  "description": "node-app",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "watch": "nodemon index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hmzoo/node-app.git"
-  },
-  "author": "HMJ",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hmzoo/node-app/issues"
-  },
-  "homepage": "https://github.com/hmzoo/node-app#readme",
+  "name": "interface.simpleserver",
+  "version": "0.1.0",
+  "description": "simple osc and midi server for interface.js",
+  "main": "interface.simpleserver.js",
   "dependencies": {
-    "express": "^4.15.2",
-    "express-session": "^1.15.2",
-    "mqtt": "^2.7.2",
-    "socket.io": "^2.0.1"
-  }
+    "connect": "~3.2.0",
+    "directory": "~0.1.0",
+    "serve-index": "~1.4.0",
+    "serve-static": "~1.6.3",
+    "ws": "~0.4.32",
+    "minimist": "~1.1.0",
+    "osc-min": "~0.2.0",
+    "midi": "~0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "osc",
+    "midi"
+  ],
+  "author": "Charlie Roberts <charlie@charlie-roberts.com> (http://www.charlie-roberts.com/)",
+  "license": "MIT"
 }

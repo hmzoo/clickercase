@@ -6,8 +6,6 @@ cp nodeapp /etc/init.d
 cd /opt/app
 npm install
 npm install -g forever
-cd /opt/app/client
-npm install
 
 chown -R pi /opt/app
 
