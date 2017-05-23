@@ -1,0 +1,68 @@
+<html>
+<body style="background-color:blue;">
+<h1 style="text-align:center;">CLICKER CASE APPLY</h1>
+<head>
+  <script src='interface.js'></script>
+</head>
+<body>
+  <script>
+    // The Interface.js simple server outputs all OSC messages to port 8082. See the README for more information.
+
+    // You can manually send OSC messages with the following syntax:
+    // Interface.OSC.send('/test', 'fs', [5.7, 'testing']);
+    panel = new Interface.Panel({ useRelativeSizesAndPositions: true });
+
+    // send a message to the address '/button'
+    a = new Interface.Button({
+      bounds:[.05,.08,.4,.2],
+      fill:'#F0FFF0', background:'#00FFFF', stroke:'#000000',
+      mode:'contact',
+      label: 'AIMANT',
+      target:"OSC", key:'/sol1',
+})
+
+    // send a message to the address '/slider'
+    b = new Interface.Button({
+      bounds:[.55,.08,.4,.2],
+      fill:'#F0FFF0', background:'#7CFC00', stroke:'#000000',
+      mode:'contact',
+      label: 'AIMANT',
+      target:"OSC", key:'/sol2',
+})
+    c = new Interface.Button({
+      bounds:[.05,.3,.4,.2],
+      fill:'#F0FFF0', background:'#FF4500', stroke:'#000000',
+      mode:'contact',
+      label: 'PINCES',
+      target:"OSC", key:'/sol3',
+})
+     d = new Interface.Button({
+       bounds:[.55,.3,.4,.2],
+       fill:'#F0FFF0', background:'#FFFF00', stroke:'#000000',
+       mode:'contact',
+       label: 'VENTOUSE',
+
+       target:"OSC", key:'/sol4',
+})
+      e = new Interface.Knob({
+         bounds:[.12,.53,.25],
+         fill:'#7CFC00', background:'#F0FFF0', stroke:'#000000',
+         value:.9,
+         usesRotation:false,
+         centerZero: false,
+         hAlign:'right',
+         target:"OSC", key:'/hpv',
+})
+    panel.add( a, b, c, d, e );
+
+    // override to process OSC messages. By default, if a message is received with the
+    // same address as the key of one of the widgets (here /button and /slider) the value
+    // of that widget will be set using the parameters of the received OSC message.
+
+    Interface.OSC.receive = function( address, typetags, parameters ) {
+      console.log( address, typetags, parameters )
+    }
+  </script>
+</body>
+</html>
+
