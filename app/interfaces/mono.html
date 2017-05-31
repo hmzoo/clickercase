@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>CLICKERCASE</title>
+<meta name="description" content="Simple page"><meta name="author" content="-">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="./cardinal.css">
+<link rel="stylesheet" href="./font-awesome/css/font-awesome.css">
+<script src='interface.js'></script>
+
+</head>
+<body>
+
+<div class="wrapper tc"><h6>Clicker Case - MONO</h6></div>
+
+<div class="wrapper tc">
+<div id="app" style="width:400px;height:500px;border: 2px #9999FF dashed;margin:auto"></div>
+</div>
+
+
+
+<div class="wrapper mt">
+<div class="grid m">
+  <div class="grid-item 1  tc 1/2 "><a class="btn btn-primary btn-round btn" href='/'><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;ACCUEIL</a></div>
+  <div class="grid-item 1  tc 1/2 "><a class="btn btn-primary btn-round btn" href='./multi.html'><i class="fa fa-users" aria-hidden="true"></i>&nbsp;MULTI</a></div>
+</div>
+</div>
+
+<script>
+var bw=0.3;
+var dw=(1-bw*3)/4;
+var bh=bw*4/5;
+var ph=bh+dw*4/5;
+
+  // The Interface.js simple server outputs all OSC messages to port 8082. See the README for more information.
+
+  // You can manually send OSC messages with the following syntax:
+  // Interface.OSC.send('/test', 'fs', [5.7, 'testing']);
+//  panel = new Interface.Panel({ useRelativeSizesAndPositions: true });
+panel = new Interface.Panel({useRelativeSizesAndPositions:true,background:"#FFF",container:document.querySelector("#app")});
+  // send a message to the address '/button'
+  a = new Interface.Button({
+    bounds:[dw,0,bw,bh],
+    fill:'#F0FFF0', background:'#00FFFF', stroke:'#000000',
+    mode:'contact',
+    label: 'AIMANT',
+    target:"OSC", key:'/sol1',
+})
+
+  // send a message to the address '/slider'
+  b = new Interface.Button({
+    bounds:[dw+bw+dw,0,bw,bh],
+    fill:'#F0FFF0', background:'#7CFC00', stroke:'#000000',
+    mode:'contact',
+    label: 'AIMANT',
+    target:"OSC", key:'/sol2',
+})
+  c = new Interface.Button({
+    bounds:[dw+bw+dw+bw+dw,0,bw,bh],
+    fill:'#F0FFF0', background:'#FF4500', stroke:'#000000',
+    mode:'contact',
+    label: 'PINCES',
+    target:"OSC", key:'/sol3',
+})
+   d = new Interface.Button({
+     bounds:[dw,ph,bw,bh],
+     fill:'#F0FFF0', background:'#FFFF00', stroke:'#000000',
+     mode:'contact',
+     label: 'VENTOUSE',
+
+     target:"OSC", key:'/sol4',
+})
+
+e = new Interface.Button({
+  bounds:[dw+bw+dw,ph,bw,bh],
+  fill:'#F0FFF0', background:'#FFFF00', stroke:'#000000',
+  mode:'contact',
+  label: 'todo ...',
+
+  target:"OSC", key:'/sol4',
+})
+
+f = new Interface.Button({
+  bounds:[dw+bw+dw+bw+dw,ph,bw,bh],
+  fill:'#F0FFF0', background:'#FFFF00', stroke:'#000000',
+  mode:'contact',
+  label: 'todo ...',
+
+  target:"OSC", key:'/sol4',
+})
+    k = new Interface.Knob({
+       bounds:[.25,.55,0.50,0.50],
+       fill:'#7CFC00', background:'#F0FFF0', stroke:'#000000',
+       value:.9,
+       usesRotation:false,
+       centerZero: false,
+       hAlign:'right',
+       target:"OSC", key:'/hpv',
+})
+  panel.add( a, b, c, d, e, f,k );
+  //panel.add( a);
+
+  // override to process OSC messages. By default, if a message is received with the
+  // same address as the key of one of the widgets (here /button and /slider) the value
+  // of that widget will be set using the parameters of the received OSC message.
+
+  Interface.OSC.receive = function( address, typetags, parameters ) {
+    console.log( address, typetags, parameters )
+  }
+  console.log( document.querySelector("#app"));
+</script>
+</body>
+</html>

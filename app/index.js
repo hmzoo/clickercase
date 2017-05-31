@@ -6,7 +6,7 @@ var fs                = require('fs'),
     directory         = require('serve-index'),
     static            = require('serve-static'),
     oscMin            = require( 'osc-min' ),
-    midi              = null,   
+    midi              = null,
     parseArgs         = require( 'minimist' ),
     udp               = require( 'dgram' ),
     args              = parseArgs( process.argv.slice(2) ),
@@ -15,7 +15,7 @@ var fs                = require('fs'),
     oscOutPort        = args.oscOutPort || webServerPort + 2,
     oscInPort         = args.oscInPort  || webServerPort + 3,
 //    outputIPAddress   = args.outputIPAddress || null,
-    outputIPAddress   = '192.168.10.2', 
+    outputIPAddress   = '192.168.10.2',
     appendID          = args.appendID   || false,
     //osc               = new omgosc.UdpSender( '127.0.0.1', oscOutPort ),
     clients_in        = new ws.Server({ port:socketPort }),
@@ -34,7 +34,7 @@ var fs                = require('fs'),
     },
     osc,
     idNumber = 0;
-    
+
 if( args.useMIDI === true ) midi = require( 'midi' )
 
 //interfaceJS =  fs.readFileSync( '../external/zepto.js', ['utf-8'] );
@@ -43,19 +43,19 @@ interfaceJS += fs.readFileSync( './interface.client.js', ['utf-8'] );
 
 osc = udp.createSocket( 'udp4', function( _msg, rinfo ) {
   var msg = oscMin.fromBuffer( _msg )
-    
+
   var firstPath = msg.address.split('/')[1],
       isNumber  = ! isNaN( firstPath ),
       tt = '',
       msgArgs = []
-  
+
   for( var i = 0 ; i < msg.args.length; i++ ) {
     var arg = msg.args[ i ]
-  
+
     tt += arg.type[ 0 ]
     msgArgs.push( arg.value )
   }
-  
+
   if( ! isNumber ) {
     for( var key in clients ) {
       try{
@@ -70,37 +70,37 @@ osc.bind( oscInPort )
 
 serveInterfaceJS = function(req, res, next){
 	req.uri = url.parse( req.url );
-  
+
 	if( req.uri.pathname == "/interface.js" ) {
 		res.writeHead( 200, {
 			'Content-Type': 'text/javascript',
 			'Content-Length': interfaceJS.length
 		})
 		res.end( interfaceJS );
-    
+
 		return;
 	}
-  
+
   next();
 };
 
 server = app
-  .use( directory( root, { hidden:false,icons:true } ) )
+  //.use( directory( root, { hidden:false,icons:true } ) )
   .use( serveInterfaceJS )
   .use( static(root) )
   .listen( webServerPort );
 
 clients_in.on( 'connection', function ( socket ) {
   //console.log( "device connection received", socket.upgradeReq.headers );
-  
+
   var clientIP = socket.upgradeReq.headers.origin.split( ':' )[ 1 ].split( '//' )[ 1 ]
-  
+
   console.log("client connected:", clientIP )
-  
+
   clients[ idNumber ] = socket
   socket.ip = clientIP
   socket.idNumber = idNumber++
-  
+
   socket.on( 'message', function( obj ) {
     var msg = JSON.parse( obj );
 
@@ -112,7 +112,7 @@ clients_in.on( 'connection', function ( socket ) {
         address: msg.address,
         args: msg.parameters
       })
-      
+
       osc.send( buf, 0, buf.length, oscOutPort, outputIPAddress || 'localhost')
     }else if( msg.type === 'midi' && midi !== null ) {
       if( !midiInit ) {
