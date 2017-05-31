@@ -1,4 +1,0 @@
-SUBSCRIBE:
-mosquitto_sub -h localhost -t nodemcu/N01
-PUBLISH:
-mosquitto_pub -h localhost -t /nodemcu/N01/SD -m "2:0"
