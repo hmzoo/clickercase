@@ -7,21 +7,84 @@
 <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="./cardinal.css">
 <link rel="stylesheet" href="./font-awesome/css/font-awesome.css">
+<script src='interface.js'></script>
 </head>
 <body>
 <div class="wrapper tc"><h6>Clicker Case - MULTI</h6></div>
-<div class="wrapper mt++">
-<div class="grid m">
-  <div class="grid-item 1/3  tc ">50</div>
-  <div class="grid-item 1/3 tc  ">50</div>
-  <div class="grid-item 1/3 tc  ">50</div>
-</div>
-</div>
+
+<div id="app_multi" style="width:300px;height:500px;border: 2px #9999FF dashed;margin:auto"></div>
+
+
 <div class="wrapper mt++">
 <div class="grid m">
   <div class="grid-item 1  tc 1/2 "><a class="btn btn-primary btn-round btn" href='/'><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;ACCUEIL</a></div>
   <div class="grid-item 1  tc 1/2 "><a class="btn btn-primary btn-round btn" href='./mono.html'><i class="fa fa-user" aria-hidden="true"></i>&nbsp;MONO</a></div>
 </div>
 </div>
+<script>
+var ratio=3/5;
+
+var bh=ratio*1/4;
+var dh=(1-bh*4)/5;
+var ph=bh+dh;
+
+  // The Interface.js simple server outputs all OSC messages to port 8082. See the README for more information.
+
+  // You can manually send OSC messages with the following syntax:
+  // Interface.OSC.send('/test', 'fs', [5.7, 'testing']);
+//  panel = new Interface.Panel({ useRelativeSizesAndPositions: true });
+panel = new Interface.Panel({useRelativeSizesAndPositions:true,background:"#FFF",container:document.querySelector("#app_multi")});
+  // send a message to the address '/button'
+  var ja = new Interface.MultiButton({
+    rows:1,
+    columns:4,
+    bounds:[0,0,1,bh],
+    fill:'#99BBFF', background:'#999999', stroke:'#FFFFFF',
+    onvaluechange : function(row, col, value) {
+    console.log(row,col,value);
+    }
+  });
+
+  var jb = new Interface.MultiButton({
+    rows:1,
+    columns:4,
+    bounds:[0,ph,1,bh],
+    fill:'#99BBFF', background:'#999999', stroke:'#FFFFFF',
+    onvaluechange : function(row, col, value) {
+    console.log(row,col,value);
+    }
+  });
+
+  var jc = new Interface.MultiButton({
+    rows:1,
+    columns:4,
+    bounds:[0,ph*2,1,bh],
+    fill:'#99BBFF', background:'#999999', stroke:'#FFFFFF',
+    onvaluechange : function(row, col, value) {
+    console.log(row,col,value);
+    }
+  });
+
+  var jd = new Interface.MultiButton({
+    rows:1,
+    columns:4,
+    bounds:[0,ph*3,1,bh],
+    fill:'#99FFBB', background:'#999999', stroke:'#FFFFFF',
+    onvaluechange : function(row, col, value) {
+    console.log(row,col,value);
+    }
+  });
+
+  panel.add( ja,jb,jc,jd );
+  //panel.add( a);
+
+  // override to process OSC messages. By default, if a message is received with the
+  // same address as the key of one of the widgets (here /button and /slider) the value
+  // of that widget will be set using the parameters of the received OSC message.
+
+  Interface.OSC.receive = function( address, typetags, parameters ) {
+    console.log( address, typetags, parameters )
+  }
+</script>
 </body>
 </html>

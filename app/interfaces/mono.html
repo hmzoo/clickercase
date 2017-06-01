@@ -14,9 +14,9 @@
 
 <div class="wrapper tc"><h6>Clicker Case - MONO</h6></div>
 
-<div class="wrapper tc">
-<div id="app" style="width:400px;height:500px;border: 2px #9999FF dashed;margin:auto"></div>
-</div>
+
+<div id="app_mono" style="width:300px;height:500px;border: 2px #9999FF dashed;margin:auto"></div>
+
 
 
 
@@ -28,17 +28,18 @@
 </div>
 
 <script>
+var ratio=3/5;
 var bw=0.3;
 var dw=(1-bw*3)/4;
-var bh=bw*4/5;
-var ph=bh+dw*4/5;
+var bh=bw*ratio;
+var ph=bh+dw*ratio;
 
   // The Interface.js simple server outputs all OSC messages to port 8082. See the README for more information.
 
   // You can manually send OSC messages with the following syntax:
   // Interface.OSC.send('/test', 'fs', [5.7, 'testing']);
 //  panel = new Interface.Panel({ useRelativeSizesAndPositions: true });
-panel = new Interface.Panel({useRelativeSizesAndPositions:true,background:"#FFF",container:document.querySelector("#app")});
+panel = new Interface.Panel({useRelativeSizesAndPositions:true,background:"#FFF",container:document.querySelector("#app_mono")});
   // send a message to the address '/button'
   a = new Interface.Button({
     bounds:[dw,0,bw,bh],
@@ -108,7 +109,6 @@ f = new Interface.Button({
   Interface.OSC.receive = function( address, typetags, parameters ) {
     console.log( address, typetags, parameters )
   }
-  console.log( document.querySelector("#app"));
 </script>
 </body>
 </html>
